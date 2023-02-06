@@ -1,0 +1,27 @@
+{
+  "name": "nitro-inconsistent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nitropack dev",
+    "prepare": "nitropack prepare",
+    "build": "nitropack build",
+    "cloudflare": "pnpm run:cloudflare",
+    "deno": "pnpm run:deno",
+    "node-server": "pnpm run:node-server",
+    "run:deno": "NITRO_PRESET=deno nitropack build && deno run -A .output/server/index.ts",
+    "run:cloudflare": "NITRO_PRESET=cloudflare nitropack build && wrangler dev .output/server/index.mjs --site .output/public --local --port 3000",
+    "run:node-server": "NITRO_PRESET=node-server nitropack build && node .output/server/index.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "consola": "^2.15.3",
+    "nitropack": "^2.1.1"
+  },
+  "devDependencies": {
+    "wrangler": "^2.9.0"
+  }
+}

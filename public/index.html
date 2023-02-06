@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+</head>
+
+<body>
+    <section>
+        be sure to check the server's logs too!
+    </section>
+    <form name="formdata" action="/" method="post">
+        <h1>
+            Formdata
+        </h1>
+        <input type="text" name="test" value="testing formdata">
+        <button type="submit">Submit</button>
+    </form>
+    <ul>
+        <b>Expectations</b>
+        <li>
+            node-server:
+            <pre>{"body":"{\"test\":\"testing formdata\"}","type":"string"}</pre>
+        </li>
+        <li>
+            deno:
+            <pre>{"body":"blob:null/bb05d563-f9a9-4fcf-a4bd-0e11116eb72e","type":"string"}</pre>
+        </li>
+        <li>
+            cloudflare:
+            <pre>{"body":{"type":"Buffer","data":[123,34,116,101,115,116,34,58,34,116,101,115,116,105,110,103,32,102,111,114,109,100,97,116,97,34,125]},"type":"object"}</pre>
+        </li>
+    </ul>
+    <h2>
+        formdata results
+    </h2>
+    <pre id="formdata_results">
+
+    </pre>
+    <form name="json" action="/" method="post">
+        <h1>
+            JSON
+        </h1>
+        <input type="text" name="test" value="testing json">
+        <button type="submit">Submit</button>
+    </form>
+    <b>Expectations</b>
+    <ul>
+        <li>
+            node:
+            <pre>{"body":"{\"test\":\"testing json\"}","type":"string"}</pre>
+        </li>
+        <li>
+            deno:
+            <pre>{"body":"blob:null/a9f116d7-5f24-4f78-a50f-aa6432394633","type":"string"}</pre>
+        </li>
+        <li>
+            cloudflare:
+            <pre>{"body":{"type":"Buffer","data":[123,34,116,101,115,116,34,58,34,116,101,115,116,105,110,103,32,106,115,111,110,34,125]},"type":"object"}</pre>
+        </li>
+    </ul>
+    <h2>
+        JSON Results
+    </h2>
+    <pre id="json_results">
+    </pre>
+    <script>
+        document.forms.json.addEventListener('submit', async function (e) {
+            e.preventDefault()
+            let res = await fetch('/', { method: 'POST', body: JSON.stringify({ test: e.target.test.value }) })
+            document.getElementById('json_results').innerText = await res.clone().text()
+        })
+        document.forms.formdata.addEventListener('submit', async function (e) {
+            e.preventDefault()
+            let res = await fetch('/', { method: 'POST', body: JSON.stringify({ test: e.target.test.value }) })
+            document.getElementById('formdata_results').innerText = await res.clone().text()
+        })
+    </script>
+</body>
+
+</html>
