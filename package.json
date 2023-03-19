@@ -19,9 +19,9 @@
   "license": "ISC",
   "dependencies": {
     "consola": "^2.15.3",
-    "nitropack": "^2.1.1"
+    "nitropack": "^2.3.1"
   },
   "devDependencies": {
-    "wrangler": "^2.9.0"
+    "wrangler": "^2.12.3"
   }
 }
